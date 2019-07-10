@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Start-Class: com.vpbank.msa.demo.Longpn3EchoApplication
+Start-Class: com.phamngoclong.lab.EchoApp
 Main-Class: org.springframework.boot.loader.JarLauncher
 
