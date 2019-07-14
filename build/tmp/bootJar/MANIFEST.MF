@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Start-Class: com.phamngoclong.lab.EchoApp
+Start-Class: com.phamngoclong.lab.App
 Main-Class: org.springframework.boot.loader.JarLauncher
 
