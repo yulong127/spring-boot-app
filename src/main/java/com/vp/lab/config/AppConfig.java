@@ -17,4 +17,6 @@ import lombok.Setter;
 public class AppConfig {
 	
 	private String webhookVerifyToken;
+	private String sendApiUri;
+	private String sendApiToken;
 }

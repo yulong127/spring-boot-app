@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vp.lab.config.AppConfig;
 import com.vp.lab.config.AppConstant;
+import com.vp.lab.model.Entry;
+import com.vp.lab.model.Message;
+import com.vp.lab.model.Messaging;
+import com.vp.lab.model.User;
 import com.vp.lab.model.WebhookEvent;
 
 @RestController
@@ -23,6 +27,9 @@ public class Webhook {
 
 	@Autowired
 	private AppConfig appConfig;
+	
+	@Autowired
+	private SendAPI sendAPI;
 
 	@GetMapping()
 	public ResponseEntity<String> verify(
@@ -54,12 +61,20 @@ public class Webhook {
 	}
 
 	@PostMapping()
-	public ResponseEntity<String> input(@RequestBody String e) {
-//		if (Objects.equals(e.getObject(), "page")) {
-//			return ResponseEntity.ok(e);
-//		} else
-//			return ResponseEntity.badRequest().body(null);
-		return ResponseEntity.ok(e);
+	public ResponseEntity<WebhookEvent> input(@RequestBody WebhookEvent e) {
+		if (Objects.equals(e.getObject(), "page")) {
+
+			for (Entry entry : e.getEntry()) {
+				System.out.println("Processing a message entry: " + entry.getMessaging().get(0).getMessage().getText());
+				
+				sendAPI.send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY", entry.getMessaging().get(0).getSender().getId(), "Độ ta ko độ nàng!");
+				
+				
+			}
+			return ResponseEntity.ok(e);
+		} else
+			return ResponseEntity.badRequest().body(null);
+//		return ResponseEntity.ok(e);
 
 	}
 
