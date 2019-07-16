@@ -27,9 +27,6 @@ public class Webhook {
 
 	@Autowired
 	private AppConfig appConfig;
-	
-	@Autowired
-	private SendAPI sendAPI;
 
 	@GetMapping()
 	public ResponseEntity<String> verify(
@@ -66,10 +63,10 @@ public class Webhook {
 
 			for (Entry entry : e.getEntry()) {
 				System.out.println("Processing a message entry: " + entry.getMessaging().get(0).getMessage().getText());
-				
-				sendAPI.send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY", entry.getMessaging().get(0).getSender().getId(), "Độ ta ko độ nàng!");
-				
-				
+
+				SendAPI.getInstance().send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY", entry.getMessaging().get(0).getSender().getId(),
+						"Độ ta ko độ nàng!");
+
 			}
 			return ResponseEntity.ok(e);
 		} else
