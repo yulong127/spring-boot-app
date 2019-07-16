@@ -1,4 +1,4 @@
-package com.phamngoclong.lab;
+package com.vp.lab;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

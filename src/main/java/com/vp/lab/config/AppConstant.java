@@ -1,4 +1,4 @@
-package com.phamngoclong.lab.config;
+package com.vp.lab.config;
 
 public class AppConstant {
 

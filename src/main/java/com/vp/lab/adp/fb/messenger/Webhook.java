@@ -1,4 +1,4 @@
-package com.phamngoclong.lab.adp.fb.messenger;
+package com.vp.lab.adp.fb.messenger;
 
 import java.util.Date;
 import java.util.Objects;
@@ -8,13 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phamngoclong.lab.config.AppConfig;
-import com.phamngoclong.lab.config.AppConstant;
-import com.phamngoclong.lab.model.Message;
+import com.vp.lab.config.AppConfig;
+import com.vp.lab.config.AppConstant;
+import com.vp.lab.model.WebhookEvent;
 
 @RestController
 @RequestMapping("webhook")
@@ -53,13 +54,13 @@ public class Webhook {
 	}
 
 	@PostMapping()
-	public ResponseEntity<Message> input(@PathVariable String input) {
+	public ResponseEntity<String> input(@RequestBody String e) {
+//		if (Objects.equals(e.getObject(), "page")) {
+//			return ResponseEntity.ok(e);
+//		} else
+//			return ResponseEntity.badRequest().body(null);
+		return ResponseEntity.ok(e);
 
-		Message mes = new Message();
-		mes.setContent(input);
-		mes.setTime(new Date());
-
-		return ResponseEntity.ok(mes);
 	}
 
 }
