@@ -59,20 +59,27 @@ public class Webhook {
 
 	@PostMapping()
 	public ResponseEntity<WebhookEvent> input(@RequestBody WebhookEvent e) {
-		if (Objects.equals(e.getObject(), "page")) {
+		try {
+			if (Objects.equals(e.getObject(), "page")) {
+				System.out.println("Processing " + e.getEntry().size() + " items...");
 
-			for (Entry entry : e.getEntry()) {
-				System.out.println("Processing a message entry: " + entry.getMessaging().get(0).getMessage().getText());
+				for (Entry entry : e.getEntry()) {
+					System.out.println(
+							"Message entry: " + entry.getMessaging().get(0).getMessage().getText());
 
-				SendAPI.getInstance().send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY", entry.getMessaging().get(0).getSender().getId(),
-						"Độ ta ko độ nàng!");
+					SendAPI.getInstance().send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY",
+							entry.getMessaging().get(0).getSender().getId(), "Độ ta ko độ nàng!");
 
-			}
-			return ResponseEntity.ok(e);
-		} else
-			return ResponseEntity.badRequest().body(null);
+				}
+				return ResponseEntity.ok(e);
+			} else
+				return ResponseEntity.badRequest().body(null);
 //		return ResponseEntity.ok(e);
 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.ok(null);
+		}
 	}
 
 }
