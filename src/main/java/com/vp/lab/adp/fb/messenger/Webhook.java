@@ -21,8 +21,11 @@ import com.vp.lab.model.Messaging;
 import com.vp.lab.model.User;
 import com.vp.lab.model.WebhookEvent;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping("webhook")
+@Log4j2
 public class Webhook {
 
 	@Autowired
@@ -39,14 +42,14 @@ public class Webhook {
 		} else {
 			switch (mode) {
 			case AppConstant.WEBHOOK_MODE_SUBSCRIBE:
-				System.out.println("Received a subscription request with token: " + token);
+				log.info("Received a subscription request with token: " + token);
 				String verifyToken = appConfig.getWebhookVerifyToken();
-				System.out.println("Compare with: " + verifyToken);
+				log.info("Compare with: " + verifyToken);
 				if (Objects.equals(token, verifyToken)) {
-					System.out.println("Token verified, returning with challenge: " + challenge);
+					log.info("Token verified, returning with challenge: " + challenge);
 					return ResponseEntity.ok(challenge);
 				} else {
-					System.out.println("Token rejected");
+					log.info("Token rejected");
 					return ResponseEntity.status(403).body(null);
 				}
 			default:
@@ -61,11 +64,10 @@ public class Webhook {
 	public ResponseEntity<WebhookEvent> input(@RequestBody WebhookEvent e) {
 		try {
 			if (Objects.equals(e.getObject(), "page")) {
-				System.out.println("Processing " + e.getEntry().size() + " items...");
+				log.info("Processing " + e.getEntry().size() + " items...");
 
 				for (Entry entry : e.getEntry()) {
-					System.out.println(
-							"Message entry: " + entry.getMessaging().get(0).getMessage().getText());
+					log.info("Message entry: " + entry.getMessaging().get(0).getMessage().getText());
 
 					SendAPI.getInstance().send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY",
 							entry.getMessaging().get(0).getSender().getId(), "Độ ta ko độ nàng!");
