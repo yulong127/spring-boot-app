@@ -44,12 +44,12 @@ public class Webhook {
 			case AppConstant.WEBHOOK_MODE_SUBSCRIBE:
 				log.info("Received a subscription request with token: " + token);
 				String verifyToken = appConfig.getWebhookVerifyToken();
-				log.info("Compare with: " + verifyToken);
+				log.warn("Compare with: " + verifyToken);
 				if (Objects.equals(token, verifyToken)) {
 					log.info("Token verified, returning with challenge: " + challenge);
 					return ResponseEntity.ok(challenge);
 				} else {
-					log.info("Token rejected");
+					log.error("Token rejected");
 					return ResponseEntity.status(403).body(null);
 				}
 			default:
@@ -67,7 +67,7 @@ public class Webhook {
 				log.info("Processing " + e.getEntry().size() + " items...");
 
 				for (Entry entry : e.getEntry()) {
-					log.info("Message entry: " + entry.getMessaging().get(0).getMessage().getText());
+					log.warn("Message entry: " + entry.getMessaging().get(0).getMessage().getText());
 
 					SendAPI.getInstance().send("MESSAGE_TAG", "BUSINESS_PRODUCTIVITY",
 							entry.getMessaging().get(0).getSender().getId(), "Độ ta ko độ nàng!");
